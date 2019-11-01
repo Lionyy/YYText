@@ -1,6 +1,6 @@
 //
 //  YYTextContainerView.m
-//  YYText <https://github.com/ibireme/YYText>
+//  YYKit <https://github.com/ibireme/YYKit>
 //
 //  Created by ibireme on 15/4/21.
 //  Copyright (c) 2015 ibireme.
@@ -84,7 +84,7 @@
     }
     
     // draw layout
-    CGSize boundingSize = _layout.textBoundingSize;
+    CGSize boundingSize = _layout.textBoundingRect.size;
     CGPoint point = CGPointZero;
     if (_textVerticalAlignment == YYTextVerticalAlignmentCenter) {
         if (_layout.container.isVerticalForm) {
