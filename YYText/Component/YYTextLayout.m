@@ -363,7 +363,15 @@ dispatch_semaphore_signal(_lock);
     return [self layoutWithContainer:container text:text range:NSMakeRange(0, text.length)];
 }
 
++ (YYTextLayout *)layoutWithContainer:(YYTextContainer *)container text:(NSAttributedString *)text font:(UIFont *)font {
+    return [self layoutWithContainer:container text:text font:font range:NSMakeRange(0, text.length)];
+}
+
 + (YYTextLayout *)layoutWithContainer:(YYTextContainer *)container text:(NSAttributedString *)text range:(NSRange)range {
+    return [self layoutWithContainer:container text:text font:nil range:range];
+}
+
++ (YYTextLayout *)layoutWithContainer:(YYTextContainer *)container text:(NSAttributedString *)text font:(UIFont *)font range:(NSRange)range {
     YYTextLayout *layout = NULL;
     CGPathRef cgPath = nil;
     CGRect cgPathBox = {0};
@@ -526,9 +534,9 @@ dispatch_semaphore_signal(_lock);
         position.x = cgPathBox.origin.x + ctLineOrigin.x;
         position.y = cgPathBox.size.height + cgPathBox.origin.y - ctLineOrigin.y;
         
-        YYTextLine *line = [YYTextLine lineWithCTLine:ctLine position:position vertical:isVerticalForm];
+        YYTextLine *line = [YYTextLine lineWithCTLine:ctLine font:font position:position vertical:isVerticalForm];
         CGRect rect = line.bounds;
-        
+
         if (constraintSizeIsExtended) {
             if (isVerticalForm) {
                 if (rect.origin.x + rect.size.width >
@@ -739,7 +747,7 @@ dispatch_semaphore_signal(_lock);
                     CTLineRef ctTruncatedLine = CTLineCreateTruncatedLine(ctLastLineExtend, truncatedWidth, type, truncationTokenLine);
                     CFRelease(ctLastLineExtend);
                     if (ctTruncatedLine) {
-                        truncatedLine = [YYTextLine lineWithCTLine:ctTruncatedLine position:lastLine.position vertical:isVerticalForm];
+                        truncatedLine = [YYTextLine lineWithCTLine:ctTruncatedLine font:font position:lastLine.position vertical:isVerticalForm];
                         truncatedLine.index = lastLine.index;
                         truncatedLine.row = lastLine.row;
                         CFRelease(ctTruncatedLine);

@@ -15,11 +15,23 @@
 
 @implementation YYTextLine {
     CGFloat _firstGlyphPos; // first glyph position for baseline, typically 0.
+    UIFont *_font;
 }
 
 + (instancetype)lineWithCTLine:(CTLineRef)CTLine position:(CGPoint)position vertical:(BOOL)isVertical {
     if (!CTLine) return nil;
     YYTextLine *line = [self new];
+    line->_position = position;
+    line->_vertical = isVertical;
+    [line setCTLine:CTLine];
+    return line;
+}
+
++ (instancetype)lineWithCTLine:(CTLineRef)CTLine font:(UIFont *)font position:(CGPoint)position vertical:(BOOL)isVertical;
+{
+    if (!CTLine) return nil;
+    YYTextLine *line = [self new];
+    line->_font = font;
     line->_position = position;
     line->_vertical = isVertical;
     [line setCTLine:CTLine];
@@ -37,6 +49,7 @@
         _CTLine = CTLine;
         if (_CTLine) {
             _lineWidth = CTLineGetTypographicBounds(_CTLine, &_ascent, &_descent, &_leading);
+            _lineHeight = _ascent + _descent;
             CFRange range = CTLineGetStringRange(_CTLine);
             _range = NSMakeRange(range.location, range.length);
             if (CTLineGetGlyphCount(_CTLine) > 0) {
@@ -53,6 +66,14 @@
             _lineWidth = _ascent = _descent = _leading = _firstGlyphPos = _trailingWhitespaceWidth = 0;
             _range = NSMakeRange(0, 0);
         }
+        
+        // 通过字体获取ascent和ascent
+        if (_font) {
+            _ascent = _font.ascender;
+            _descent = _font.descender;
+            _lineHeight = _font.lineHeight;
+        }
+        
         [self reloadBounds];
     }
 }
@@ -67,7 +88,7 @@
         _bounds = CGRectMake(_position.x - _descent, _position.y, _ascent + _descent, _lineWidth);
         _bounds.origin.y += _firstGlyphPos;
     } else {
-        _bounds = CGRectMake(_position.x, _position.y - _ascent, _lineWidth, _ascent + _descent);
+        _bounds = CGRectMake(_position.x, _position.y - _ascent, _lineWidth, _lineHeight);
         _bounds.origin.x += _firstGlyphPos;
     }
     

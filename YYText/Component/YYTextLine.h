@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)lineWithCTLine:(CTLineRef)CTLine position:(CGPoint)position vertical:(BOOL)isVertical;
 
++ (instancetype)lineWithCTLine:(CTLineRef)CTLine font:(UIFont *)font position:(CGPoint)position vertical:(BOOL)isVertical;
+
 @property (nonatomic) NSUInteger index;     ///< line index
 @property (nonatomic) NSUInteger row;       ///< line row
 @property (nullable, nonatomic, strong) NSArray<NSArray<YYTextRunGlyphRange *> *> *verticalRotateRange; ///< Run rotate range
@@ -51,6 +53,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) CGFloat descent;    ///< line descent
 @property (nonatomic, readonly) CGFloat leading;    ///< line leading
 @property (nonatomic, readonly) CGFloat lineWidth;  ///< line width
+@property (nonatomic, readonly) CGFloat lineHeight; ///< line height
 @property (nonatomic, readonly) CGFloat trailingWhitespaceWidth;
 
 @property (nullable, nonatomic, readonly) NSArray<YYTextAttachment *> *attachments; ///< YYTextAttachment

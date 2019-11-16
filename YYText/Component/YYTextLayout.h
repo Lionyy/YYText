@@ -185,6 +185,12 @@ extern const CGSize YYTextContainerMaxSize;
  */
 + (nullable YYTextLayout *)layoutWithContainer:(YYTextContainer *)container text:(NSAttributedString *)text range:(NSRange)range;
 
+/// 新增API，通过font获取asender和desender
++ (nullable YYTextLayout *)layoutWithContainer:(YYTextContainer *)container text:(NSAttributedString *)text font:(nullable UIFont *)font;
+
+/// 新增API，通过font获取asender和desender
++ (nullable YYTextLayout *)layoutWithContainer:(YYTextContainer *)container text:(NSAttributedString *)text font:(nullable UIFont *)font range:(NSRange)range;
+
 /**
  Generate layouts with the given containers and text.
  
