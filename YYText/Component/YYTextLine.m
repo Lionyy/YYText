@@ -88,7 +88,7 @@
         _bounds = CGRectMake(_position.x - _descent, _position.y, _ascent + _descent, _lineWidth);
         _bounds.origin.y += _firstGlyphPos;
     } else {
-        _bounds = CGRectMake(_position.x, _position.y - _ascent, _lineWidth, _lineHeight);
+        _bounds = CGRectMake(_position.x, ceil(_position.y - _ascent), _lineWidth, (NSInteger)_lineHeight);
         _bounds.origin.x += _firstGlyphPos;
     }
     
